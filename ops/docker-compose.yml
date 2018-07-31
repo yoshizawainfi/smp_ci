@@ -1,0 +1,20 @@
+version: '3.4'
+
+x-logging:
+  &default-logging
+  driver: json-file
+
+networks:
+  smp_ci-nw:
+
+services:
+  smp_ci:
+    image: smp_ci:latest
+    container_name: smp_ci
+    logging: *default-logging
+    networks:
+       smp_ci-nw:
+        aliases:
+          - samp-ci
+    #command: sh -c "while true; do echo hello world; sleep 1; done"
+    command: sh -c "./run_nose_test.sh"
