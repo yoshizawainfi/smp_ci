@@ -17,8 +17,8 @@ steps:
   - '-f'
   - './ops/Dockerfile'
   - '.'
-
 - name: asia.gcr.io/$PROJECT_ID/docker-compose:latest
+  id: compose-up
   wait_for:
   - docker-compose
   - smp_ci
@@ -26,6 +26,13 @@ steps:
   - '-f'
   - './ops/docker-compose.yml'
   - 'up'
+
+- name: gcr.io/cloud-builders/docker
+  wait_for:
+  - compose-up
+  args:
+  - 'logs'
+  - 'smp_ci'
 
 images:
   - 'asia.gcr.io/$PROJECT_ID/smp_ci'
