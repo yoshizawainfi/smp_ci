@@ -1,5 +1,6 @@
 steps:
 - name: gcr.io/cloud-builders/docker
+  id: docker-compose
   args:
   - 'build'
   - '--build-arg'
@@ -8,6 +9,7 @@ steps:
   - 'asia.gcr.io/$PROJECT_ID/docker-compose:latest'
   - '.'
 - name: gcr.io/cloud-builders/docker
+  id: smp_ci
   args:
   - 'build'
   - '-t'
@@ -17,7 +19,8 @@ steps:
   - '.'
 - name: asia.gcr.io/$PROJECT_ID/docker-compose
   waitFor:
-  - '-'
+  - docker-compose
+  - smp_ci
   args:
   - '-f'
   - './ops/docker-compose.yml'
