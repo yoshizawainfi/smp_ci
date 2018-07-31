@@ -18,7 +18,7 @@ steps:
   - './ops/Dockerfile'
   - '.'
 
-- name: asia.gcr.io/$PROJECT_ID/docker-compose
+- name: asia.gcr.io/$PROJECT_ID/docker-compose:latest
   wait_for:
   - docker-compose
   - smp_ci
