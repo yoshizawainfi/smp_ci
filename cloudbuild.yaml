@@ -5,7 +5,7 @@ steps:
   - '--build-arg'
   - 'version=1.21.2'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/docker-compose:latest'
+  - 'asia.gcr.io/$PROJECT_ID/docker-compose:latest'
   - '.'
 - name: gcr.io/cloud-builders/docker
   args:
