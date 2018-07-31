@@ -1,4 +1,8 @@
 steps:
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'asia.gcr.io/$PROJECT_ID/smp_ci', '-f', './ops/Dockerfile', '.']
+- name: asia.gcr.io/$PROJECT_ID/smp_ci
+  waitFor:
+  - "-"
+  args: ['-f', './ops/docker-compose.yml', 'up']
 images: ['asia.gcr.io/$PROJECT_ID/smp_ci']
