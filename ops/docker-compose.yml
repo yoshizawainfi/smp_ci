@@ -9,7 +9,7 @@ networks:
 
 services:
   smp_ci:
-    image: smp_ci:latest
+    image: asia.gcr.io/$PROJECT_ID/smp_ci:latest
     container_name: smp_ci
     logging: *default-logging
     networks:
