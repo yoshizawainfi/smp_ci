@@ -1,6 +1,6 @@
 steps:
 - name: gcr.io/cloud-builders/docker
-  id: smp_ci
+  id: build_smp_ci
   args:
   - 'build'
   - '-t'

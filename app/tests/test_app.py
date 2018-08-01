@@ -8,7 +8,7 @@ class TestAdd:
 
     def test_add_nums(self):
         actual = app.add(1, 10)
-        assert actual == 11
+        assert actual == 12
 
     @raises(RuntimeError)
     def test_add_not_num1(self):
