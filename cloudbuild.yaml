@@ -1,0 +1,45 @@
+steps:
+
+- name: gcr.io/cloud-builders/docker
+  id: build_docker_protoc
+  args:
+  - 'build'
+  - '-t'
+  - 'asia.gcr.io/$PROJECT_ID/protoc'
+  - '-f'
+  - './ops/protoc/Dockerfile'
+  - '.'
+- name: asia.gcr.io/$PROJECT_ID/protoc
+  id: build_protoc
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - 'cd data_types;'
+  - './build.sh;'
+# protocが動いたことを確認したい。。
+#- name: gcr.io/cloud-builders/docker
+#  id: check_protoc
+#  entrypoint: 'bash'
+#  args:
+#  - '-c'
+#  - 'ls proto/*'
+
+- name: gcr.io/cloud-builders/docker
+  id: build_smp_ci
+  args:
+  - 'build'
+  - '-t'
+  - 'asia.gcr.io/$PROJECT_ID/smp_ci'
+  - '-f'
+  - './ops/Dockerfile'
+  - '.'
+- name: gcr.io/cloud-builders/docker
+  id: run_ci
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - './ops/ci.sh'
+
+images:
+  - 'asia.gcr.io/$PROJECT_ID/smp_ci'
+  - 'asia.gcr.io/$PROJECT_ID/protoc'
