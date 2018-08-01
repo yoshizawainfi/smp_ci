@@ -1,14 +1,5 @@
 steps:
 - name: gcr.io/cloud-builders/docker
-  id: docker-compose
-  args:
-  - 'build'
-  - '--build-arg'
-  - 'version=1.21.2'
-  - '-t'
-  - 'asia.gcr.io/$PROJECT_ID/docker-compose:latest'
-  - '.'
-- name: gcr.io/cloud-builders/docker
   id: smp_ci
   args:
   - 'build'
@@ -17,23 +8,12 @@ steps:
   - '-f'
   - './ops/Dockerfile'
   - '.'
-- name: asia.gcr.io/$PROJECT_ID/docker-compose:latest
-  id: compose-up
-  wait_for:
-  - docker-compose
-  - smp_ci
-  args:
-  - '-f'
-  - './ops/docker-compose.yml'
-  - 'up'
-
 - name: gcr.io/cloud-builders/docker
-  wait_for:
-  - compose-up
+  id: run_ci
+  entrypoint: 'bash'
   args:
-  - 'logs'
-  - 'smp_ci'
+  - '-c'
+  - './ops/ci.sh'
 
 images:
   - 'asia.gcr.io/$PROJECT_ID/smp_ci'
-  - 'asia.gcr.io/$PROJECT_ID/docker-compose:latest'
